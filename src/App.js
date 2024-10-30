@@ -2,39 +2,43 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from './components/Home';
 import Contact from './components/Contact';
-import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Card, Container, Nav, Navbar } from 'react-bootstrap';
 
 function App() {
    return (
-      <div className="App container-fluid">
+      <Container fluid className="App">
          <Router>
-            <nav className="mb-5 py-3 d-flex flex-row justify-content-center navbar sticky-top card shadow">
-               <Link to="/" className="btn">TodoList</Link>
-               <Link to="/contact" className="btn">Kontakt</Link>
-            </nav>
+            <Navbar as="nav" expand="sm" className="mb-5 bg-body-tertiary sticky-top card shadow">
+               <Container>
+                  <Navbar.Brand href="/">user-profile-arndt</Navbar.Brand>
+                  <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                  <Navbar.Collapse id="basic-navbar-nav">
+                     <Nav className="ms-auto">
+                        <Nav.Link href="/">Home</Nav.Link>
+                        <Nav.Link href="/contact">Kontakt</Nav.Link>
+                     </Nav>
+                  </Navbar.Collapse>
+               </Container>
+            </Navbar>
             <Routes>
                <Route path="/" element={
-                  <div className="container d-flex justify-content-center card shadow">
-                     <Home />
-                  </div>
+                  <Container>
+                     <Card className="justify-content-center shadow">
+                        <Home />
+                     </Card>
+                  </Container>
                } />
                <Route path="/contact" element={
-                  <div className="container d-flex justify-content-center text-start card shadow">
-                     <Contact />
-                  </div>
+                  <Container>
+                     <Card className="justify-content-center text-start shadow">
+                        <Contact />
+                     </Card>
+                  </Container>
                } />
             </Routes>
          </Router>
-         {/* <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <p>
-               Edit <code>src/App.js</code> and save to reload.
-            </p>
-            <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-               Learn React
-            </a>
-         </header> */}
-      </div>
+      </Container>
    );
 }
 

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Button, Container, Form } from 'react-bootstrap';
 
 function ContactForm() {
     const [formData, setFormData] = useState({ name: '', message: '' });
@@ -16,39 +17,31 @@ function ContactForm() {
     };
 
     return (
-        <div className='container-fluid w-auto my-3'>
+        <Container fluid className='w-auto my-3'>
             <h3>Kontaktformular</h3>
-            <form onSubmit={handleSubmit}>
-                <label className="form-label">
-                    Name:
-                    <input type="text" name="name" value={formData.name} onChange={handleChange} 
-                        className="form-control" placeholder="Name eingeben" />
-                </label>
-                <br />
-
-                <label className="form-label">
-                    Nachricht:
+            <Form onSubmit={handleSubmit}>
+                <Form.Group className='my-3'>
+                    <Form.Label>Name:</Form.Label>
+                    <Form.Control type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Name eingeben" />
+                </Form.Group>
+                <Form.Group className='my-3'>
+                    <Form.Label>Nachricht:</Form.Label>
                     <textarea name="message" value={formData.message} onChange={handleChange} 
                       className="form-control" placeholder="Nachricht eingeben" />
-                </label>
-                <br />
+                </Form.Group>
+                <Form.Group className='d-flex'>
+                    <Button className='mx-auto' type="submit">Absenden</Button>
+                </Form.Group>
+            </Form>
 
-                <button type="submit">Absenden</button>
-            </form>
-
-            {/* Anzeige der eingereichten Daten */}
             {submittedData && (
-                <div style={{ marginTop: '20px' }}>
-                    <h4>Eingereichte Daten:</h4>
-                    <p>
-                        <strong>Name:</strong> {submittedData.name}
-                    </p>
-                    <p>
-                        <strong>Nachricht:</strong> {submittedData.message}
-                    </p>
+                <div className='mt-5'>
+                    <h4>Eingereichte Daten</h4>
+                    <p><strong>Name:</strong> {submittedData.name}</p>
+                    <p><strong>Nachricht:</strong> {submittedData.message}</p>
                 </div>
             )}
-        </div>
+        </Container>
     );
 }
 
