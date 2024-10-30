@@ -11,3 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.container-fluid.component, .container.component {
+  width: auto;
+  min-width: min(95%, 300px);
+}

@@ -17,7 +17,7 @@ function ContactForm() {
     };
 
     return (
-        <Container fluid className='w-auto my-3'>
+        <Container fluid className='component my-3 justify-content-center'>
             <h3>Kontaktformular</h3>
             <Form onSubmit={handleSubmit}>
                 <Form.Group className='my-3'>

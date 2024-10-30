@@ -23,14 +23,14 @@ function App() {
             </Navbar>
             <Routes>
                <Route path="/" element={
-                  <Container>
+                  <Container as="main">
                      <Card className="justify-content-center shadow">
                         <Home />
                      </Card>
                   </Container>
                } />
                <Route path="/contact" element={
-                  <Container>
+                  <Container as="main">
                      <Card className="justify-content-center text-start shadow">
                         <Contact />
                      </Card>
