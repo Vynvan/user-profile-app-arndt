@@ -1,11 +1,17 @@
 import { Card, Container } from 'react-bootstrap';
 
-function CardLayout({ Component }) {
+function CardLayout({ Component, Components, asArticle }) {
+   if (Component) Components = [Component];
    return (
       <Container as="main">
-         <Card className="justify-content-center text-start shadow">
-            <Component />
-         </Card>
+         {(Components || []).map((Comp, index) => (
+            <Card
+               as={asArticle ? 'article' : 'section'}
+               className="justify-content-center text-start shadow"
+               key={index}>
+               <Comp />
+            </Card>
+         ))}
       </Container>
    );
 }
