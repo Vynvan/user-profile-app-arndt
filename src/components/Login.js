@@ -53,7 +53,7 @@ function Login() {
       localStorage.removeItem('token');
       localStorage.removeItem('userId');
       setIsLoggedIn(false);
-      setMessage('Sie haben sich erfolgreich eingeloggt.');
+      setMessage('Sie haben sich ausgeloggt. Bis zum nächsten Mal!');
    }
 
    const onToggle = () => {
@@ -73,11 +73,11 @@ function Login() {
                <>
                   <Form.Group className="my-3">
                      <Form.Label>Benutzername:</Form.Label>
-                     <Form.Control type="text" name="username" required />
+                     <Form.Control type="text" name="username" autoComplete='username' required />
                   </Form.Group>
                   <Form.Group className="my-3">
                      <Form.Label>Passwort:</Form.Label>
-                     <Form.Control type="password" name="password" required />
+                     <Form.Control type="password" name="password" autoComplete='current-password' required />
                   </Form.Group>
                </>
             )}
