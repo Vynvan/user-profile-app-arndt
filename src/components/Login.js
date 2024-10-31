@@ -14,11 +14,11 @@ function Login() {
    const [message, setMessage] = useState('');
 
    const handleLogin = async () => {
-      const username = document.getElementsByName('username').value;
-      const password = document.getElementsByName('password').value;
+      const username = document.forms['login']['username'].value;
+      const password = document.forms['login']['password'].value;
 
       try {
-         const response = await fetch(`api/login`, {
+         const response = await fetch(`http://localhost:3002/users`, {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ function Login() {
    };
 
    const handleLogout = async () => {
-      fetch(`api/login`, {
+      fetch(`http://localhost:3002/users/logout`, {
          method: 'POST',
          headers: {
             'Content-Type': 'application/json',
@@ -58,10 +58,8 @@ function Login() {
 
    const onToggle = () => {
       if (isLoggedIn) {
-         setIsLoggedIn(false);
          handleLogout();
       } else {
-         setIsLoggedIn(true);
          handleLogin();
       }
    };
@@ -70,7 +68,7 @@ function Login() {
       <Container fluid className="component my-3 justify-content-center">
          <h3>{isLoggedIn ? 'Herzlich willkommen!' : 'Bitte einloggen:'}</h3>
          <p>{message}</p>
-         <Form onSubmit={handleLogin}>
+         <Form name='login' onSubmit={handleLogin}>
             {!isLoggedIn && (
                <>
                   <Form.Group className="my-3">
