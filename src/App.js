@@ -1,11 +1,12 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Contact from './components/Contact';
-import Home from './components/Home';
-import Login from './components/Login';
+import Contact from './sites/Contact';
+import Home from './sites/Home';
+import Login from './sites/Login';
+import CardLayout from './components/CardLayout';
 import Navigation from './components/Navigation';
 import { Route, Routes } from 'react-router-dom';
-import { Card, Container } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 
 function App() {
    return (
@@ -13,25 +14,13 @@ function App() {
          <Navigation />
          <Routes>
             <Route path="/" element={
-               <Container as="main">
-                  <Card className="justify-content-center shadow">
-                     <Home />
-                  </Card>
-               </Container>
+               <CardLayout Component={Home} />
             } />
             <Route path="/contact" element={
-               <Container as="main">
-                  <Card className="justify-content-center text-start shadow">
-                     <Contact />
-                  </Card>
-               </Container>
+               <CardLayout Component={Contact} />
             } />
             <Route path="/login" element={
-               <Container as="main">
-                  <Card className="justify-content-center text-start shadow">
-                     <Login />
-                  </Card>
-               </Container>
+               <CardLayout Component={Login} />
             } />
          </Routes>
       </Container>
