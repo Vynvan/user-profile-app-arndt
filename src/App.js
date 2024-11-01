@@ -22,6 +22,7 @@ function App() {
             } />
             <Route path="/login" element={
                <CardLayout Component={Login} />
+               // <CardLayout Components={[Login, Register]} />
             } />
             <Route path="/register" element={
                <CardLayout Component={Register} />

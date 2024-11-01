@@ -1,3 +1,4 @@
+import config from '../config';
 import LogoutToggleButton from '../components/LogoutToggleButton';
 import { UserContext } from '../components/UserProvider';
 import { useContext, useState } from 'react';
@@ -14,7 +15,7 @@ function Login() {
       const password = document.forms['login']['password'].value;
 
       try {
-         const response = await fetch(`http://localhost:3002/users`, {
+         const response = await fetch(`${config.apiUrl}/users`, {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json',

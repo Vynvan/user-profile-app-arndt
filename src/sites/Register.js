@@ -1,3 +1,4 @@
+import config from '../config';
 import LogoutToggleButton from '../components/LogoutToggleButton';
 import { UserContext } from '../components/UserProvider';
 import { useContext, useState } from 'react';
@@ -20,7 +21,7 @@ function Register() {
       }
 
       try {
-         const response = await fetch(`http://localhost:3002/users/register`, {
+         const response = await fetch(`${config.apiUrl}/users/register`, {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json',
