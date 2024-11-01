@@ -1,15 +1,8 @@
+import LogoutToggleButton from '../components/LogoutToggleButton';
 import { UserContext } from '../components/UserProvider';
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Container, Form } from 'react-bootstrap';
-
-function LoginToggleButton({ onToggle, user }) {
-   return (
-      <Button onClick={onToggle}>
-         {user ? 'Abmelden' : 'Anmelden'}
-      </Button>
-   );
-}
 
 function Login() {
    const { user, setUser } = useContext(UserContext);
@@ -42,24 +35,6 @@ function Login() {
       }
    };
 
-   const handleLogout = async () => {
-      fetch(`http://localhost:3002/users/logout`, {
-         method: 'POST',
-         headers: {
-            'Content-Type': 'application/json',
-         },
-         body: JSON.stringify({ userId: localStorage.getItem('userId') }),
-      });
-
-      setUser(null);
-      setMessage('Sie haben sich ausgeloggt. Bis zum nächsten Mal!');
-   }
-
-   const onToggle = () => {
-      if (user) handleLogout();
-      else handleLogin();
-   };
-
    return (
       <Container fluid className="component my-3 justify-content-center">
          <h3>{user ? 'Herzlich willkommen!' : 'Bitte einloggen:'}</h3>
@@ -78,7 +53,7 @@ function Login() {
                </>
             )}
             <Form.Group className="d-flex justify-content-around">
-               <LoginToggleButton user={user} onToggle={onToggle} />
+               <LogoutToggleButton onLogin={handleLogin} setMessage={setMessage} />
                {!user && <Button onClick={() => navigate('/register')}>Registrieren</Button>}
             </Form.Group>
          </Form>

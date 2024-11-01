@@ -1,6 +1,7 @@
+import LogoutToggleButton from '../components/LogoutToggleButton';
 import { UserContext } from '../components/UserProvider';
 import { useContext, useState } from 'react';
-import { Button, Container, Form } from 'react-bootstrap';
+import { Container, Form } from 'react-bootstrap';
 
 function Register() {
    const { user, setUser } = useContext(UserContext);
@@ -40,27 +41,6 @@ function Register() {
       }
    };
 
-   const handleLogout = async () => {
-      fetch(`http://localhost:3002/users/logout`, {
-         method: 'POST',
-         headers: {
-            'Content-Type': 'application/json',
-         },
-         body: JSON.stringify({ userId: localStorage.getItem('userId') }),
-      });
-
-      setUser(null);
-      setMessage('Sie haben sich ausgeloggt. Bis zum nächsten Mal!');
-   }
-
-   const onToggle = () => {
-      if (user) {
-         handleLogout();
-      } else {
-         handleRegistration();
-      }
-   };
-
    return (
       <Container fluid className="component my-3 justify-content-center">
          <h3>{user ? 'Herzlich willkommen!' : 'Bitte alle Felder ausfüllen:'}</h3>
@@ -91,7 +71,7 @@ function Register() {
                </>
             )}
             <Form.Group className="d-flex">
-               <Button className='mx-auto' onClick={onToggle}>{user ? 'Abmelden' : 'Registrieren'}</Button>
+               <LogoutToggleButton loginText={'Registrieren'} onLogin={handleRegistration} setMessage={setMessage} />
             </Form.Group>
          </Form>
       </Container>
