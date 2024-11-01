@@ -1,43 +1,40 @@
 import { UserContext } from '../components/UserProvider';
 import { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Button, Container, Form } from 'react-bootstrap';
 
-function LoginToggleButton({ onToggle, user }) {
-   return (
-      <Button onClick={onToggle}>
-         {user ? 'Abmelden' : 'Anmelden'}
-      </Button>
-   );
-}
-
-function Login() {
+function Register() {
    const { user, setUser } = useContext(UserContext);
    const [message, setMessage] = useState('');
-   const navigate = useNavigate();
 
-   const handleLogin = async () => {
-      const username = document.forms['login']['username'].value;
-      const password = document.forms['login']['password'].value;
+   const handleRegistration = async () => {
+      const name = document.forms['register']['name'].value;
+      const username = document.forms['register']['username'].value;
+      const password = document.forms['register']['password'].value;
+      const password2 = document.forms['register']['password2'].value;
+
+      if (password !== password2) {
+         setMessage('Passwort und Passwort-Bestätigung sind ungleich.');
+         return;
+      }
 
       try {
-         const response = await fetch(`http://localhost:3002/users`, {
+         const response = await fetch(`http://localhost:3002/users/register`, {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ username, password }),
+            body: JSON.stringify({ username, name, password }),
          });
 
          const { message, userId, token } = await response.json();
          if (response.ok) {
-            setMessage('Sie haben sich erfolgreich eingeloggt.');
+            setMessage('Sie haben sich erfolgreich registriert.');
             setUser({ username, userId, token });
          } else {
-            setMessage(message ?? 'Login fehlgeschlagen!');
+            setMessage(message ?? 'Registrierung fehlgeschlagen!');
          }
       } catch (error) {
-         console.error('Fehler beim Login:', error);
+         console.error('Fehler bei der Registrierung:', error);
          setMessage('Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.');
       }
    };
@@ -56,15 +53,18 @@ function Login() {
    }
 
    const onToggle = () => {
-      if (user) handleLogout();
-      else handleLogin();
+      if (user) {
+         handleLogout();
+      } else {
+         handleRegistration();
+      }
    };
 
    return (
       <Container fluid className="component my-3 justify-content-center">
-         <h3>{user ? 'Herzlich willkommen!' : 'Bitte einloggen:'}</h3>
+         <h3>{user ? 'Herzlich willkommen!' : 'Bitte alle Felder ausfüllen:'}</h3>
          <p>{message}</p>
-         <Form name='login' onSubmit={handleLogin}>
+         <Form name='register'>
             {!user && (
                <>
                   <Form.Group className="my-3">
@@ -72,18 +72,25 @@ function Login() {
                      <Form.Control type="text" name="username" autoComplete='username' required />
                   </Form.Group>
                   <Form.Group className="my-3">
+                     <Form.Label>Name:</Form.Label>
+                     <Form.Control type="text" name="name" autoComplete='name' required />
+                  </Form.Group>
+                  <Form.Group className="my-3">
                      <Form.Label>Passwort:</Form.Label>
                      <Form.Control type="password" name="password" autoComplete='current-password' required />
                   </Form.Group>
+                  <Form.Group className="my-3">
+                     <Form.Label>Passwort bestätigen:</Form.Label>
+                     <Form.Control type="password" name="password2" required />
+                  </Form.Group>
                </>
             )}
-            <Form.Group className="d-flex justify-content-around">
-               <LoginToggleButton user={user} onToggle={onToggle} />
-               {!user && <Button onClick={() => navigate('/register')}>Registrieren</Button>}
+            <Form.Group className="d-flex">
+               <Button className='mx-auto' onClick={onToggle}>{user ? 'Abmelden' : 'Registrieren'}</Button>
             </Form.Group>
          </Form>
       </Container>
    );
 }
 
-export default Login;
+export default Register;
