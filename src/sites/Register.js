@@ -7,6 +7,7 @@ function Register() {
    const [message, setMessage] = useState('');
 
    const handleRegistration = async () => {
+      const email = document.forms['register']['email'].value;
       const name = document.forms['register']['name'].value;
       const username = document.forms['register']['username'].value;
       const password = document.forms['register']['password'].value;
@@ -23,7 +24,7 @@ function Register() {
             headers: {
                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ username, name, password }),
+            body: JSON.stringify({ username, name, email, password }),
          });
 
          const { message, userId, token } = await response.json();
@@ -74,6 +75,10 @@ function Register() {
                   <Form.Group className="my-3">
                      <Form.Label>Name:</Form.Label>
                      <Form.Control type="text" name="name" autoComplete='name' required />
+                  </Form.Group>
+                  <Form.Group className="my-3">
+                     <Form.Label>Email:</Form.Label>
+                     <Form.Control type="email" name="email" autoComplete='email' required />
                   </Form.Group>
                   <Form.Group className="my-3">
                      <Form.Label>Passwort:</Form.Label>
