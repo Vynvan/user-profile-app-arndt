@@ -7,7 +7,7 @@ function CardLayout({ Component, Components, asArticle }) {
          {(Components || []).map((Comp, index) => (
             <Card
                as={asArticle ? 'article' : 'section'}
-               className="justify-content-center text-start shadow"
+               className="mb-5 justify-content-center text-start shadow"
                key={index}>
                <Comp />
             </Card>
