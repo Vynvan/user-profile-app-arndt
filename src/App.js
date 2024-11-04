@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import Contact from './sites/Contact';
 import Home from './sites/Home';
 import Login from './sites/Login';
+import UserProfile from './sites/UserProfile';
 import Register from './sites/Register';
 import { Route, Routes } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
@@ -14,11 +15,11 @@ function App() {
    const darkTheme = false;
    
    return (
-      <Container fluid className={`App ${darkTheme ? 'bg-dark text-white' : 'bg-light text-dark'}`}>
+      <Container fluid className={`App d-flex flex-column justify-content-start ${darkTheme ? 'bg-dark text-white' : 'bg-light text-dark'}`}>
          <Navigation />
          <Routes>
             <Route path="/" element={
-               <CardLayout Component={Home} />
+               <CardLayout Components={[Home, UserProfile]} />
             } />
             <Route path="/contact" element={
                <CardLayout Component={Contact} />

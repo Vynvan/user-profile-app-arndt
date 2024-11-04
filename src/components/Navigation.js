@@ -1,6 +1,8 @@
-import { UserContext } from '../components/UserProvider';
+import LogoutToggleButton from './LogoutToggleButton';
+import { UserContext } from './UserProvider';
 import { useContext } from 'react';
-import { Container, Nav, Navbar } from 'react-bootstrap';
+import { Container, Dropdown, Nav, Navbar } from 'react-bootstrap';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
 function Navigation() {
    const { user } = useContext(UserContext);
@@ -14,7 +16,14 @@ function Navigation() {
                <Nav className="ms-auto">
                   <Nav.Link href="/">Home</Nav.Link>
                   <Nav.Link href="/contact">Kontakt</Nav.Link>
-                  <Nav.Link href="/login">{user ? user.username : 'Login'}</Nav.Link>
+                  {user ? (
+                     <NavDropdown id="dropdown-basic-button" variant='none' title={user.username}>
+                        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+                        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+                        <LogoutToggleButton as={Nav.Link} />
+                        </NavDropdown>
+                     ) : <Nav.Link href="/login">Login</Nav.Link>
+                  }
                </Nav>
             </Navbar.Collapse>
          </Container>
