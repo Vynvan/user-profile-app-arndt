@@ -1,8 +1,8 @@
 import { UserContext } from '../components/UserProvider';
 import { useContext } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, DropdownItem } from 'react-bootstrap';
 
-function LogoutToggleButton({ loginText, onLogin, setMessage }) {
+function LogoutToggleButton({ asDropdownItem, loginText, onLogin, setMessage }) {
    const { user, setUser } = useContext(UserContext);
 
    if (!onLogin) onLogin = () => {};
@@ -18,10 +18,13 @@ function LogoutToggleButton({ loginText, onLogin, setMessage }) {
    }
    
    return (
+      asDropdownItem ? (
+         <DropdownItem onClick={handleLogout}>Abmelden</DropdownItem>
+      ) : (
       <Button onClick={() => user ? handleLogout() : onLogin()}>
          {user ? 'Abmelden' : loginText ?? 'Anmelden'}
       </Button>
-   );
+   ));
 }
 
 export default LogoutToggleButton;

@@ -9,7 +9,7 @@ function UserProfile() {
    const [message, setMessage] = useState('');
 
    useEffect(() => {
-      const token = user.token;
+      const token = user ? user.token : null;
       const fetchProfile = async () => {
          try {
             const response = await fetch(config.apiUrl + '/profile', {

@@ -20,7 +20,7 @@ function Navigation() {
                      <NavDropdown id="dropdown-basic-button" variant='none' title={user.username}>
                         <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
                         <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                        <LogoutToggleButton as={Nav.Link} />
+                        <LogoutToggleButton asDropdownItem />
                         </NavDropdown>
                      ) : <Nav.Link href="/login">Login</Nav.Link>
                   }
