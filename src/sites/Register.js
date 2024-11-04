@@ -1,12 +1,13 @@
 import config from '../config';
 import LogoutToggleButton from '../components/LogoutToggleButton';
 import { UserContext } from '../components/UserProvider';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useNavigate, useState } from 'react';
 import { Container, Form } from 'react-bootstrap';
 
 function Register() {
    const { user, setUser } = useContext(UserContext);
    const [message, setMessage] = useState('');
+   const navigate = useNavigate();
 
    const handleRegistration = async () => {
       const email = document.forms['register']['email'].value;
@@ -22,17 +23,16 @@ function Register() {
 
       try {
          const response = await fetch(`${config.apiUrl}/users/register`, {
+            headers: { 'Content-Type': 'application/json' },
             method: 'POST',
-            headers: {
-               'Content-Type': 'application/json',
-            },
             body: JSON.stringify({ username, name, email, password }),
          });
 
          const { message, userId, token } = await response.json();
          if (response.ok) {
-            setMessage('Sie haben sich erfolgreich registriert.');
+            setMessage('Sie haben sich erfolgreich registriert. Sie werden gleich weitergeleitet...');
             setUser({ username, userId, token });
+            setTimeout(() => navigate('/'), 2000);
          } else {
             setMessage(message ?? 'Registrierung fehlgeschlagen!');
          }

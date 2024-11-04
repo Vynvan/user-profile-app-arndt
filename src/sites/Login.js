@@ -16,17 +16,16 @@ function Login() {
 
       try {
          const response = await fetch(`${config.apiUrl}/users`, {
+            headers: { 'Content-Type': 'application/json' },
             method: 'POST',
-            headers: {
-               'Content-Type': 'application/json',
-            },
             body: JSON.stringify({ username, password }),
          });
 
          const { message, userId, token } = await response.json();
          if (response.ok) {
-            setMessage('Sie haben sich erfolgreich eingeloggt.');
+            setMessage('Sie haben sich erfolgreich eingeloggt. Sie werden gleich weitergeleitet...');
             setUser({ username, userId, token });
+            setTimeout(() => navigate('/'), 2000);
          } else {
             setMessage(message ?? 'Login fehlgeschlagen!');
          }
