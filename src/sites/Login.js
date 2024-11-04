@@ -3,11 +3,12 @@ import LogoutToggleButton from '../components/LogoutToggleButton';
 import { UserContext } from '../components/UserProvider';
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Container, Form } from 'react-bootstrap';
+import { Alert, Button, Container, Form } from 'react-bootstrap';
 
 function Login() {
    const { user, setUser } = useContext(UserContext);
    const [message, setMessage] = useState('');
+   const [messageType, setMessageType] = useState('danger');
    const navigate = useNavigate();
 
    const handleLogin = async () => {
@@ -23,8 +24,9 @@ function Login() {
 
          const { message, userId, token } = await response.json();
          if (response.ok) {
-            setMessage('Sie haben sich erfolgreich eingeloggt. Sie werden gleich weitergeleitet...');
             setUser({ username, userId, token });
+            setMessage('Sie haben sich erfolgreich eingeloggt. Sie werden gleich weitergeleitet...');
+            setMessageType('success');
             setTimeout(() => navigate('/'), 2000);
          } else {
             setMessage(message ?? 'Login fehlgeschlagen!');
@@ -38,7 +40,7 @@ function Login() {
    return (
       <Container fluid className="component my-3 justify-content-center">
          <h3>{user ? 'Herzlich willkommen!' : 'Bitte einloggen:'}</h3>
-         <p>{message}</p>
+         {message && <Alert variant={messageType}>{message}</Alert>}
          <Form name='login' onSubmit={handleLogin}>
             {!user && (
                <>
@@ -53,7 +55,7 @@ function Login() {
                </>
             )}
             <Form.Group className="d-flex justify-content-around">
-               <LogoutToggleButton onLogin={handleLogin} setMessage={setMessage} />
+               <LogoutToggleButton onLogin={handleLogin} setMessage={setMessage} setMessageType={setMessageType} />
                {!user && <Button onClick={() => navigate('/register')}>Registrieren</Button>}
             </Form.Group>
          </Form>

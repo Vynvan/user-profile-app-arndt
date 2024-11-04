@@ -1,12 +1,13 @@
 import config from '../config';
 import LogoutToggleButton from '../components/LogoutToggleButton';
 import { UserContext } from '../components/UserProvider';
-import { useContext, useEffect, useNavigate, useState } from 'react';
-import { Container, Form } from 'react-bootstrap';
+import { useContext, useNavigate, useState } from 'react';
+import { Alert, Container, Form } from 'react-bootstrap';
 
 function Register() {
    const { user, setUser } = useContext(UserContext);
    const [message, setMessage] = useState('');
+   const [messageType, setMessageType] = useState('danger');
    const navigate = useNavigate();
 
    const handleRegistration = async () => {
@@ -30,8 +31,9 @@ function Register() {
 
          const { message, userId, token } = await response.json();
          if (response.ok) {
-            setMessage('Sie haben sich erfolgreich registriert. Sie werden gleich weitergeleitet...');
             setUser({ username, userId, token });
+            setMessage('Sie haben sich erfolgreich registriert. Sie werden gleich weitergeleitet...');
+            setMessageType('success');
             setTimeout(() => navigate('/'), 2000);
          } else {
             setMessage(message ?? 'Registrierung fehlgeschlagen!');
@@ -45,7 +47,7 @@ function Register() {
    return (
       <Container fluid className="component my-3 justify-content-center">
          <h3>{user ? 'Herzlich willkommen!' : 'Bitte alle Felder ausfüllen:'}</h3>
-         <p>{message}</p>
+         {message && <Alert variant={messageType}>{message}</Alert>}
          <Form name='register'>
             {!user && (
                <>
