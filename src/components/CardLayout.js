@@ -3,7 +3,7 @@ import { Card, Container } from 'react-bootstrap';
 function CardLayout({ Component, Components, asArticle }) {
    if (Component) Components = [Component];
    return (
-      <Container as="main">
+      <Container as="main" className='flex-grow-1'>
          {(Components || []).map((Comp, index) => (
             <Card
                as={asArticle ? 'article' : 'section'}

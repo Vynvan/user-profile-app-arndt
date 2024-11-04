@@ -3,3 +3,21 @@
   text-align: center;
 }
 
+main {
+  min-height: max-content;
+}
+
+nav.card {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+footer.card {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.container-fluid.component, .container.component {
+  width: auto;
+  min-width: min(95%, 300px);
+}

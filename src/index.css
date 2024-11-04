@@ -15,8 +15,3 @@ code {
 #root {
   min-height: 100vh;
 }
-
-.container-fluid.component, .container.component {
-  width: auto;
-  min-width: min(95%, 300px);
-}
