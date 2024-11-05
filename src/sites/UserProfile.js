@@ -1,12 +1,13 @@
 import { UserContext } from '../components/UserProvider';
 import React, { useContext, useState, useEffect } from 'react';
-import { Button, Container, Form } from 'react-bootstrap';
+import { Alert, Button, Container, Form } from 'react-bootstrap';
 import config from '../config';
 
 function UserProfile({ setVisible }) {
    const { user } = useContext(UserContext);
    const [formData, setFormData] = useState({ name: '', bio: '' });
    const [message, setMessage] = useState('');
+   const [messageType, setMessageType] = useState('danger');
 
    useEffect(() => {
       const token = user ? user.token : null;
@@ -73,12 +74,12 @@ function UserProfile({ setVisible }) {
          console.log(error);
          setMessage('Fehler beim Abrufen des Profils.');
       }
-   };
+};
 
    return (
       <Container fluid className="component my-3 justify-content-center">
          <h3>Profil bearbeiten</h3>
-         {message && <p className='info'>{message}</p>}
+         {message && <Alert className='text-center' variant={messageType}>{message}</Alert>}
 
          <Form onSubmit={handleSaveProfile}>
             <Form.Group className="my-3">

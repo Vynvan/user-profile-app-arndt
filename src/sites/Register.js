@@ -47,7 +47,7 @@ function Register() {
    return (
       <Container fluid className="component my-3 justify-content-center">
          <h3>{user ? 'Herzlich willkommen!' : 'Bitte alle Felder ausfüllen:'}</h3>
-         {message && <Alert variant={messageType}>{message}</Alert>}
+         {message && <Alert className='text-center' variant={messageType}>{message}</Alert>}
          <Form name='register'>
             {!user && (
                <>

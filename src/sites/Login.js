@@ -40,7 +40,7 @@ function Login() {
    return (
       <Container fluid className="component my-3 justify-content-center">
          <h3>{user ? 'Herzlich willkommen!' : 'Bitte einloggen:'}</h3>
-         {message && <Alert variant={messageType}>{message}</Alert>}
+         {message && <Alert className='text-center' variant={messageType}>{message}</Alert>}
          <Form name='login' onSubmit={handleLogin}>
             {!user && (
                <>
