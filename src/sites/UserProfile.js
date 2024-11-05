@@ -34,7 +34,10 @@ function UserProfile({ setVisible }) {
       };
       
       if (user) fetchProfile();
-      else if (typeof setVisible === 'function') setVisible(false);
+   }, [user]);
+
+   useEffect(() => {
+      if (!user && typeof setVisible === 'function') setVisible(false);
    }, [setVisible, user]);
 
    const handleInputChange = (e) => {
@@ -43,8 +46,33 @@ function UserProfile({ setVisible }) {
    };
 
    const handleSaveProfile = async (e) => {
+      const token = user ? user.token : null;
       e.preventDefault();
-      console.log('handleSaveProfile');
+      try {
+         const response = await fetch(config.apiUrl + '/profile', {
+            method: 'POST',
+            headers: {
+               Authorization: `Bearer ${token}`,
+               'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+         });
+         const { error, errorType } = await response.json();
+         if (!response.ok) {
+            if (errorType === 'token') {
+               setMessage('Redirect...')
+            } else {
+               setMessage(error ?? 'Fehler beim Laden des Profils.');
+            }
+         }
+         else {
+            setMessage('Daten erfolgreich gespeichert.');
+            setMessageType('success');
+         }
+      } catch (error) {
+         console.log(error);
+         setMessage('Fehler beim Abrufen des Profils.');
+      }
    };
 
    return (
@@ -67,7 +95,7 @@ function UserProfile({ setVisible }) {
             <Form.Group className="my-3">
                <Form.Label>Bio:</Form.Label>
                <textarea
-                  name="message"
+                  name="bio"
                   value={formData.bio}
                   onChange={handleInputChange}
                   className="form-control"
@@ -75,8 +103,8 @@ function UserProfile({ setVisible }) {
                   rows="3"
                />
             </Form.Group>
-            <Form.Group className="d-flex">
-               <Button className="mx-auto" type="submit">Profil speichern</Button>
+            <Form.Group className="d-flex justify-content-center">
+               <Button type="submit">Profil speichern</Button>
             </Form.Group>
          </Form>
       </Container>
