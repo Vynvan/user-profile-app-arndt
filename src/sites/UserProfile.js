@@ -3,7 +3,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
 import config from '../config';
 
-function UserProfile() {
+function UserProfile({ setVisible }) {
    const { user } = useContext(UserContext);
    const [formData, setFormData] = useState({ name: '', bio: '' });
    const [message, setMessage] = useState('');
@@ -15,26 +15,27 @@ function UserProfile() {
             const response = await fetch(config.apiUrl + '/profile', {
                method: 'GET',
                headers: {
-                  'Authorization': `Bearer ${token}`,
+                  Authorization: `Bearer ${token}`,
                   'Content-Type': 'application/json',
                },
             });
             const data = await response.json();
             if (response.ok) {
-               setFormData({
-                  name: data.name || '',
-                  bio: data.bio || '',
-               });
+               setFormData({ name: data.name ?? '', bio: data.bio ?? '' });
+            } else if (data.errorType && data.errorType === 'token') {
+               setMessage('Redirect...')
             } else {
-               setMessage(data.error || 'Fehler beim Laden des Profils');
+               setMessage(data.error ?? 'Fehler beim Laden des Profils.');
             }
          } catch (error) {
             console.log(error);
-            setMessage('Fehler beim Abrufen des Profils');
+            setMessage('Fehler beim Abrufen des Profils.');
          }
       };
-      fetchProfile();
-   }, [user]);
+      
+      if (user) fetchProfile();
+      else if (typeof setVisible === 'function') setVisible(false);
+   }, [setVisible, user]);
 
    const handleInputChange = (e) => {
       const { name, value } = e.target;
@@ -49,7 +50,7 @@ function UserProfile() {
    return (
       <Container fluid className="component my-3 justify-content-center">
          <h3>Profil bearbeiten</h3>
-         {message && <p>{message}</p>}
+         {message && <p className='info'>{message}</p>}
 
          <Form onSubmit={handleSaveProfile}>
             <Form.Group className="my-3">

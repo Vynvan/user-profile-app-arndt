@@ -1,13 +1,13 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CardLayout from './components/CardLayout';
-import Navigation from './components/Navigation';
 import Footer from './components/Footer';
+import Navigation from './components/Navigation';
 import Contact from './sites/Contact';
 import Home from './sites/Home';
 import Login from './sites/Login';
-import UserProfile from './sites/UserProfile';
 import Register from './sites/Register';
+import UserProfile from './sites/UserProfile';
 import { Route, Routes } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 
@@ -19,17 +19,26 @@ function App() {
          <Navigation />
          <Routes>
             <Route path="/" element={
-               <CardLayout Components={[Home, UserProfile]} />
+               <CardLayout>
+                  <Home />
+                  <UserProfile />
+               </CardLayout>
             } />
             <Route path="/contact" element={
-               <CardLayout Component={Contact} />
+               <CardLayout>
+                  <Contact />
+               </CardLayout>
             } />
             <Route path="/login" element={
-               <CardLayout Component={Login} />
-            } />
+               <CardLayout>
+                  <Login />
+               </CardLayout>
+         } />
             <Route path="/register" element={
-               <CardLayout Component={Register} />
-            } />
+               <CardLayout>
+                  <Register />
+               </CardLayout>
+         } />
          </Routes>
          <Footer />
       </Container>
