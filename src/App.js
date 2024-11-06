@@ -3,11 +3,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import CardLayout from './components/CardLayout';
 import Footer from './components/Footer';
 import Navigation from './components/Navigation';
-import Contact from './sites/Contact';
-import Home from './sites/Home';
-import Login from './sites/Login';
-import Register from './sites/Register';
-import UserProfile from './sites/UserProfile';
+import Contact from './pages/Contact';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import UserProfile from './pages/UserProfile';
 import { Route, Routes } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 
