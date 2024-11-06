@@ -8,6 +8,7 @@ function UserProfile({ setVisible }) {
    const [formData, setFormData] = useState({ name: '', bio: '' });
    const [message, setMessage] = useState('');
    const [messageType, setMessageType] = useState('danger');
+   const formattedToday = new Date().toISOString().split('T')[0];
 
    useEffect(() => {
       const token = user ? user.token : null;
@@ -20,13 +21,17 @@ function UserProfile({ setVisible }) {
                   'Content-Type': 'application/json',
                },
             });
-            const data = await response.json();
+            const { bio, birthdate, error, errorType, name, picture } = await response.json();
             if (response.ok) {
-               setFormData({ name: data.name ?? '', bio: data.bio ?? '' });
-            } else if (data.errorType && data.errorType === 'token') {
+               setFormData({
+                  name: name ?? '',
+                  birthdate: birthdate ? new Date(birthdate).toLocaleDateString().split('T')[0] : formattedToday,
+                  bio: bio ?? '',
+               });
+            } else if (errorType === 'token') {
                setMessage('Redirect...')
             } else {
-               setMessage(data.error ?? 'Fehler beim Laden des Profils.');
+               setMessage(error ?? 'Fehler beim Laden des Profils.');
             }
          } catch (error) {
             console.log(error);
@@ -91,6 +96,16 @@ function UserProfile({ setVisible }) {
                   onChange={handleInputChange}
                   placeholder="Name eingeben"
                   required
+               />
+            </Form.Group>
+            <Form.Group className="my-3">
+               <Form.Label>Geburtstag:</Form.Label>
+               <Form.Control
+                  type='date'
+                  name="birthdate"
+                  value={formData.birthdate ?? formattedToday}
+                  onChange={handleInputChange}
+                  className="form-control"
                />
             </Form.Group>
             <Form.Group className="my-3">

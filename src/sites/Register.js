@@ -1,7 +1,8 @@
 import config from '../config';
 import LogoutToggleButton from '../components/LogoutToggleButton';
 import { UserContext } from '../components/UserProvider';
-import { useContext, useNavigate, useState } from 'react';
+import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Alert, Container, Form } from 'react-bootstrap';
 
 function Register() {
