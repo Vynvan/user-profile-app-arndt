@@ -1,8 +1,9 @@
 import LogoutToggleButton from './LogoutToggleButton';
 import { UserContext } from './UserProvider';
 import { useContext } from 'react';
-import { Container, Dropdown, Nav, Navbar } from 'react-bootstrap';
+import { Container, Nav, Navbar } from 'react-bootstrap';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import DropdownSwitch from './DropdownSwitch';
 
 function Navigation() {
    const { user } = useContext(UserContext);
@@ -18,8 +19,8 @@ function Navigation() {
                   <Nav.Link href="/contact">Kontakt</Nav.Link>
                   {user ? (
                      <NavDropdown id="dropdown-basic-button" variant='none' title={user.username}>
-                        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+                        <DropdownSwitch></DropdownSwitch>
+                        <NavDropdown.Divider />
                         <LogoutToggleButton asDropdownItem />
                         </NavDropdown>
                      ) : <Nav.Link href="/login">Login</Nav.Link>
