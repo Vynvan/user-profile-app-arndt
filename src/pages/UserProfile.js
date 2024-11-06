@@ -25,7 +25,7 @@ function UserProfile({ setVisible }) {
             if (response.ok) {
                setFormData({
                   name: name ?? '',
-                  birthdate: birthdate ? new Date(birthdate).toLocaleDateString().split('T')[0] : formattedToday,
+                  birthdate: birthdate ?? formattedToday,
                   bio: bio ?? '',
                });
             } else if (errorType === 'token') {
