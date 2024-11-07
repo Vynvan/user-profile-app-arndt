@@ -29,7 +29,7 @@ function UserProfile({ setVisible }) {
                   bio: bio ?? '',
                });
             } else if (errorType === 'token') {
-               setMessage('Redirect...')
+               setMessage('Token ungültig, bitte erneut einloggen.');
             } else {
                setMessage(error ?? 'Fehler beim Laden des Profils.');
             }
