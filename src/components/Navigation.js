@@ -19,7 +19,7 @@ function Navigation() {
                   <Nav.Link href="/contact">Kontakt</Nav.Link>
                   {user ? (
                      <NavDropdown id="dropdown-basic-button" variant='none' title={user.username}>
-                        <DropdownSwitch></DropdownSwitch>
+                        <DropdownSwitch labelName={'Dark mode'} />
                         <NavDropdown.Divider />
                         <LogoutToggleButton asDropdownItem />
                         </NavDropdown>
